@@ -8,8 +8,8 @@ import os
 import json
 import requests
 
-abs_script_dir_path = os.path.dirname(os.path.abspath(__file__))
-PAYPAL_CREDENTIAL_FILE = "%s/paypal-config.json" % abs_script_dir_path
+home = os.path.expanduser("~")
+PAYPAL_CREDENTIAL_FILE = "%s/.paypal-config.json" % home
 print PAYPAL_CREDENTIAL_FILE
 PAYPAL_CONFIG = json.loads(open(PAYPAL_CREDENTIAL_FILE).read())
 
