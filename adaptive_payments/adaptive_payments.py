@@ -33,7 +33,7 @@ def refresh_access_token(refresh):
     passwd = PAYPAL_CONFIG['secret']
     data = ('grant_type=refresh_token&refresh_token=%s' % refresh)
     url= 'https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice'
-    r = request.post(url,headers=headers,data=data,auth=(user,passwd))
+    r = requests.post(url,headers=headers,data=data,auth=(user,passwd))
     return json.loads(r.content)["access_token"]
 
 
