@@ -53,7 +53,8 @@ def user_id_payment(amt, receiver_id):
             "uestEnvelope.errorLanguage=en_US&returnUrl=%s") 
             % (PAYPAL_CONFIG['sender_email'], PAYPAL_CONFIG['cancelUrl'], 
                receiver_id, amt, PAYPAL_CONFIG['returnUrl']))
-    url = PAYPAL_CONFIG['api_url'] + '/' + ENDPOINT_URI
+    #url = PAYPAL_CONFIG['api_url'] + '/' + ENDPOINT_URI
+    url = 'https://svcs.paypal.com/AdaptivePayments/' + ENDPOINT_URI
     r = requests.post(url, headers=headers, data=data)
     return r
 
@@ -77,10 +78,15 @@ def make_payment(amt, receiver_email):
     url = PAYPAL_CONFIG['api_url'] + '/' + ENDPOINT_URI
     r = requests.post(url, headers=headers, data=data)
 
-#u = 'https://api.sandbox.payypal.com/v1/identiy/openidconnect/userinfo/?schema=openid'
-#acccess_token = 
-#headers = { 'Content-Type': 'application/json', 
-#            'authorization': 'Bearer %s' % access_token}
+u = 'https://api.sandbox.payypal.com/v1/identiy/openidconnect/userinfo/?schema=openid'
+access_token = 'A015MPrEAeZL6c9hxHK-9zQV3lJj1fP0MMXADcHQ6tpsKjY'
 
-def get_user_info(code):
-    pass
+
+def get_user_id(access_token):
+    u = ('https://api.sandbox.paypal.com/v1/identity/openidconnect/userinfo/'
+             '?schema=openid')
+    headers = { 'Content-Type': 'application/json', 
+                'Authorization': 'Bearer %s' % access_token}
+
+    r = requests.get(u,headers=headers)
+    return json.loads(r.content)["user_id"]
