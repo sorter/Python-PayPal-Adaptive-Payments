@@ -27,6 +27,16 @@ def get_refresh_token(code):
                     headers=headers, data=data,auth=(user,passwd))
     return r
 
+def refresh_access_token(refresh):
+    headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+    user = PAYPAL_CONFIG['clientid']
+    passwd = PAYPAL_CONFIG['secret']
+    data = ('grant_type=refresh_token&refresh_token=%s' % refresh)
+    url= 'https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice'
+    r = request.post(url,headers=headers,data=data,auth=(user,passwd))
+    return json.loads(r.content)["access_token"]
+
+
 def user_id_payment(amt, receiver_id):
     """make payment, assumes paypal security credentials belong to the payer"""
 
@@ -66,3 +76,11 @@ def make_payment(amt, receiver_email):
                receiver_email, amt, PAYPAL_CONFIG['returnUrl']))
     url = PAYPAL_CONFIG['api_url'] + '/' + ENDPOINT_URI
     r = requests.post(url, headers=headers, data=data)
+
+#u = 'https://api.sandbox.payypal.com/v1/identiy/openidconnect/userinfo/?schema=openid'
+#acccess_token = 
+#headers = { 'Content-Type': 'application/json', 
+#            'authorization': 'Bearer %s' % access_token}
+
+def get_user_info(code):
+    pass
