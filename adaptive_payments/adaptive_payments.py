@@ -27,6 +27,27 @@ def get_refresh_token(code):
                     headers=headers, data=data,auth=(user,passwd))
     return r
 
+def user_id_payment(amt, receiver_id):
+    """make payment, assumes paypal security credentials belong to the payer"""
+
+    headers = {
+        "X-PAYPAL-SECURITY-USERID": PAYPAL_CONFIG["api_username"], 
+        "X-PAYPAL-SECURITY-PASSWORD": PAYPAL_CONFIG["api_password"],
+        "X-PAYPAL-SECURITY-SIGNATURE": PAYPAL_CONFIG["api_signature"],
+        "X-PAYPAL-REQUEST-DATA-FORMAT": "NV",
+        "X-PAYPAL-RESPONSE-DATA-FORMAT": "NV" ,
+        "X-PAYPAL-APPLICATION-ID": PAYPAL_CONFIG["app_id"]} 
+
+    data= (("actionType=PAY&senderEmail=%s&cancelUrl=%s&currencyCode=USD&receiv"
+            "erList.receiver(0).accountId=%s&receiverList.receiver(0).amount=%s&req"
+            "uestEnvelope.errorLanguage=en_US&returnUrl=%s") 
+            % (PAYPAL_CONFIG['sender_email'], PAYPAL_CONFIG['cancelUrl'], 
+               receiver_id, amt, PAYPAL_CONFIG['returnUrl']))
+    url = PAYPAL_CONFIG['api_url'] + '/' + ENDPOINT_URI
+    r = requests.post(url, headers=headers, data=data)
+    return r
+
+
 def make_payment(amt, receiver_email):
     """make payment, assumes paypal security credentials belong to the payer"""
 
