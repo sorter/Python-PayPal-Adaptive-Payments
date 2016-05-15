@@ -87,4 +87,4 @@ def get_user_id(access_token):
     headers = { 'Content-Type': 'application/json', 
                 'Authorization': 'Bearer %s' % access_token}
     r = requests.get(u,headers=headers)
-    return json.loads(r.content)["user_id"]
+    return json.loads(r.content)["user_id"].replace('https://www.paypal.com/webapps/auth/identity/user/', '')
