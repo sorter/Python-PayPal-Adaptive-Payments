@@ -13,6 +13,7 @@ PAYPAL_CREDENTIAL_FILE = "%s/.paypal-config.json" % home
 print PAYPAL_CREDENTIAL_FILE
 PAYPAL_CONFIG = json.loads(open(PAYPAL_CREDENTIAL_FILE).read())
 
+SANDBOX_SOAP_URL = 'https://svcs.sandbox.paypal.com/'
 ENDPOINT_URI = "AdaptivePayments/Pay"
 
 
@@ -53,7 +54,7 @@ def user_id_payment(amt, receiver_id):
             % (PAYPAL_CONFIG['sender_email'], PAYPAL_CONFIG['cancelUrl'], 
                receiver_id, amt, PAYPAL_CONFIG['returnUrl']))
     #url = PAYPAL_CONFIG['api_url'] + '/' + ENDPOINT_URI
-    url = 'https://svcs.paypal.com/AdaptivePayments/' + ENDPOINT_URI
+    url = '%s%s' % (SANDBOX_SOAP_URL, ENDPOINT_URI)
     r = requests.post(url, headers=headers, data=data)
     return r
 
