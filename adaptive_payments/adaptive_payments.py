@@ -36,7 +36,6 @@ def refresh_access_token(refresh):
     r = requests.post(url,headers=headers,data=data,auth=(user,passwd))
     return json.loads(r.content)["access_token"]
 
-
 def user_id_payment(amt, receiver_id):
     """make payment, assumes paypal security credentials belong to the payer"""
 
@@ -87,6 +86,5 @@ def get_user_id(access_token):
              '?schema=openid')
     headers = { 'Content-Type': 'application/json', 
                 'Authorization': 'Bearer %s' % access_token}
-
     r = requests.get(u,headers=headers)
     return json.loads(r.content)["user_id"]
