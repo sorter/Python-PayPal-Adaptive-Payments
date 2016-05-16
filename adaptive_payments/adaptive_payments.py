@@ -49,7 +49,7 @@ def make_payment(amt, receiver_email):
         "X-PAYPAL-APPLICATION-ID": PAYPAL_CONFIG["app_id"]} 
 
     data= (("actionType=PAY&senderEmail=%s&cancelUrl=%s&currencyCode=USD&receiv"
-            "erList.receiver(0).accountId=%s&receiverList.receiver(0).amount=%s&req"
+            "erList.receiver(0).email=%s&receiverList.receiver(0).amount=%s&req"
             "uestEnvelope.errorLanguage=en_US&returnUrl=%s") 
             % (PAYPAL_CONFIG['sender_email'], PAYPAL_CONFIG['cancelUrl'], 
                receiver_email, amt, PAYPAL_CONFIG['returnUrl']))
